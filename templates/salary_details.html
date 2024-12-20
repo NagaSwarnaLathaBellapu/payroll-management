@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Employee Salary Details</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Username</th>
+                <th>Company Working Days</th>
+                <th>Employee Working Days</th>
+                <th>Total Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in emp_data %}
+                <tr>
+                    <td>{{ employee.emp_id }}</td>
+                    <td>{{ employee.username }}</td>
+                    <td>{{ company_working_days }}</td>
+                    <td>{{ num_working_days }}</td>
+                    <td>{{ total_salary }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Codegnan IT Solutions &copy; 2024</p>
+    </div>
+</div>
+
+</body>
+</html>

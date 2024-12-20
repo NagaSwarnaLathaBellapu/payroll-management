@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color:rgb(217, 73, 102);
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .no-results {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+        .back-btn{
+            background-color: #007bff;
+            
+            color: white;
+            width: 150px;
+            padding: 10px;
+            margin-left: 87%;
+            cursor: pointer;
+            border:none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .back-btn:hover{
+            background-color: #0056b3;;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <a href="{{url_for('emp_list')}}"><button class="back-btn">Back</button></a>
+
+    <h1>Search Results for "{{ query }}"</h1>
+
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <!-- Replace these column headers with your actual column names -->
+                    <th>Employee ID</th>
+                    <th>Fullname</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in results %}
+                <tr>
+                    <!-- Replace these with the actual keys from your database rows -->
+                    <td>{{ row.emp_id }}</td>
+                    <td>{{ row.firstname }} {{row.lastname}}</td>
+                    <td>{{ row.designation }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.department }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-results">No results found.</div>
+    {% endif %}
+
+    
+</body>
+</html>

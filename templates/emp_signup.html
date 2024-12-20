@@ -1,0 +1,308 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Signup</title>-->
+    
+{% include 'header.html' %}
+<style>
+        /* Global Body Styling */ 
+        /* body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1ebeb; /* Soft grey background
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        } */ 
+
+        /* Form Container Styling */
+        .form-container {
+            /* background-color: transparent(); */
+            background-color: rgba(123, 191, 172, 0.3); /* 50% opacity (semi-transparent white) */
+
+            /* background-color: #8fccb1; White background for form */
+            padding: 40px;
+
+            border-radius: 8px;
+            /* box-shadow: 0px 30px 40px rgba(0, 0, 0, 0.1); Light shadow for depth */
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5); /* Inner shadow, 10px blur
+            /* box-shadow: 5px 5px 10px #333, -5px -5px 15px rgba(0, 0, 0, 0.2); Two shadows */
+            /* box-shadow: 0px 4px 10px rgba(0, 128, 255, 0.5); Semi-transparent blue shadow */
+           margin-left: 30%;
+           margin-top:3%;
+            width: 100%;
+            max-width: 550px; /* Responsive max width */
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            color:rgb(139, 10, 139);
+            margin-bottom: 30px;
+            font-size: 27px;
+        }
+
+        /* Form Group for Labels and Inputs */
+        .form-group {
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 18px;
+            color:#333;
+            width: 120px;
+            margin-right: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        select,
+        textarea {
+            width: calc(100% - 140px); /* Full width minus label space */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        /* Focused Input Fields */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #57a3ff;
+            box-shadow: 0 0 6px rgba(87, 163, 255, 0.4); /* Blue glow effect */
+            outline: none;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #57a3ff; /* Soft Blue */
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 48%;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #4390d0; /* Darker Blue on Hover */
+        }
+
+        .btn-secondary {
+            background-color: #ff6f61; /* Soft Coral */
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 48%;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e55b4f; /* Darker Coral on Hover */
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color:rgb(139, 10, 139); /* Soft Blue Link */
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .backbtn{
+            text-decoration: none;
+            color:white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            label {
+                width: auto;
+                margin-bottom: 10px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="password"],
+            select,
+            textarea {
+                width: 100%;
+            }
+        }
+        .flash-message {
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-size: 14px;
+      animation: fadeOut 30s forwards; /* Auto-hide after 30 seconds */
+      color: red;
+      text-align: center;
+    }
+
+    .flash-message.info {
+      background-color: #f0f8ff;
+      color: #007BFF;
+    }
+
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    /* Fade-out animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        display: none;
+      }
+    }
+    </style>
+    <script>
+        function empSignup(){
+            alert("You Have Registerd Successfully.Please Check Your Mail.")
+        }
+        
+        function resetForm() {
+        document.getElementById("emp_signup_form").reset();  // Clears all form fields
+        }
+    </script>
+</head>
+<body>
+   
+    <div class="form-container">
+        <h1>Employee Signup</h1>
+        <form method="post" action="{{ url_for('emp_signup') }}">
+            <!-- Employee ID and Name -->
+            <div class="form-group">
+                <label for="emp_id">Employee ID:</label>
+                <input type="text" id="emp_id" name="emp_id" placeholder="Enter Employee ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" id="name" name="firstname" placeholder="Enter First Name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="name" name="lastname" placeholder="Enter Last Name" required>
+            </div>
+
+            <!-- Designation and Gender -->
+            <div class="form-group">
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" name="designation" placeholder="Enter Designation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+  <!-- phone number -->
+  <div class="form-group">
+    <label for="phonenumber">Phone number:</label>
+    <input type="text" id="phonenumber" name="phonenumber" placeholder="Enter Phonenumber" maxlength="10"minlength="10"required>
+</div>
+            <!-- Email and Password -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" minlength="8" required >
+            </div>
+
+            <!-- Address and Department -->
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3" placeholder="Enter Address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" placeholder="Enter Department" required>
+            </div>
+
+            <!-- Salary -->
+            <div class="form-group">
+                <label for="salary">Salary:</label>
+                <input type="number" id="salary" name="salary" placeholder="Enter Salary" required>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display: flex; justify-content: space-between;">
+                <button type="submit" class="btn-primary">Submit</button>
+                <button type="button" class="btn-secondary"><a href="{{url_for('home')}}" class="backbtn">Back</a></button>
+            </div>
+
+            <!-- Login Link -->
+            <p class="login-link">Already have an account? <a href="{{url_for('emp_login')}}">Login here</a></p>
+        </form>
+    </div>
+      <!-- Display flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash-message {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+{% include 'footer1.html' %}
+</body>
+</html>

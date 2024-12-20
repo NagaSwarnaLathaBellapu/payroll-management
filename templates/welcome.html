@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Example</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        } */
+
+        .welcome {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 20px;
+            /* background-color: #f4f4f4; */
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 17px;
+            width: 120px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            /* Adjust for dropdown placement */
+            right: 0;
+            /* Align dropdown to the right */
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            width: 150px;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #869aa8;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .signup-btn {
+            text-decoration: none;
+            color: white;
+        }
+        .flashmsg{
+            text-align: center;
+            color:red;
+        }
+        .flash-message {
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-size: 20px;
+      animation: fadeOut 30s forwards; /* Auto-hide after 30 seconds */
+      color: rgb(86, 125, 196);
+      text-align:center;
+    }
+
+    .flash-message.info {
+      background-color: #f0f8ff;
+      color: #007BFF;
+    }
+
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #ab2588;
+    }
+    /* Fade-out animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        display: none;
+      }
+    }
+    </style>
+    <script>
+        // JavaScript function to show alert message for signup
+        function showSignUpAlert() {
+            alert("You have to contact your admin for registration.");
+        }
+        // JavaScript function to show alert message for emp login page
+        function showEmpLoginAlert() {
+            alert("You Have To Contact Your Admin For Login.");
+        }
+    </script>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <!-- {{session.get('email')}} -->
+    <div class="welcome">
+        <!-- the Below Shows the Alert Message By Using Javascript Onclick Function -->
+        <button class="button" onclick="showSignUpAlert()">Sign Up</button>
+
+        <!-- the Below line Shows the Flash message line to show the webpage -->
+        <!-- <button class="button"><a href="#" class="signup-btn">SignUp</a></button> -->
+        <!-- <button class="button" onclick="showEmpLoginAlert()">Login</a></button> -->
+         <a href="{{url_for('emp_login')}}"><button class="button">Login</button></a>
+        
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <h3 style="text-align:center;" class="flash-message">{{message}}</h3>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% include 'footer1.html' %}
+</body>
+
+</html>

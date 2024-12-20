@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .container h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .input-field:focus {
+      border-color: #007BFF;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .flash-message {
+      padding: 10px;
+      border: 1px solid #ddd;
+      /* margin: 10px 0; */
+      border-radius: 5px;
+      font-size: 20px;
+      animation: fadeOut 30s forwards;
+      /* Auto-hide after 30 seconds */
+      color: rgb(86, 125, 196);
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .flash-message.info {
+      background-color: #f0f8ff;
+      color: #007BFF;
+    }
+
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #ab2588;
+    }
+
+    .flash-message.error {
+      background-color: #d4edda;
+      color: red;
+    }
+
+    /* Fade-out animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for message in messages %}
+  <h3 class="flash-message {{ category }}">{{message}}</h3>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <div class="container">
+    <form action="{{url_for('otp_verify')}}" method="post">
+      <h1>OTP Verification</h1>
+      <!-- <input type="hidden" name="email" value="{{ email }}"> -->
+
+      <input type="text" class="input-field" name="otp1" placeholder="Enter OTP" maxlength="6">
+      <button class="btn" type="submit">Verify</button>
+    </form>
+  </div>
+</body>
+
+</html>

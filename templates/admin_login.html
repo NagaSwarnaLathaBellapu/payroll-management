@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin_Login</title>
+    <!-- <style>
+        .admin-div{
+            border: 20px;
+            border-color: black;
+            border-radius: 5px;
+        }
+        .admin-form{
+            border: 20px;
+            border-color: red;
+            border-radius: 5px;
+        }
+    </style> -->
+    <style>
+        .admin-div {
+            /* background: linear-gradient(to right, rgb(116, 216, 223), rgb(170, 197, 136)); Gradient from red to blue */    
+            /* background: linear-gradient(to bottom right, #d4fc79, #96e6a1); Light green to pastel yellow */
+            background: linear-gradient(to right, #d0e1ff, #f2d4f5); /* Light blue to lavender */
+            
+            border: 2px solid black; /* Adds a solid black border */
+            border-radius: 5px; /* Rounds the corners */
+            padding: 10px; /* Adds some spacing inside the div */
+            width: 500px; /* Optional: Adjust the width of the div */
+            height: 400px;
+            margin: 20px auto; /* Centers the div horizontally */
+            margin-top: 5%;
+            border:none;
+            background-color: transparent;
+            box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.4); /* Inset shadow */
+            
+        }
+        h1{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        /* .admin-form {
+          text-align: center;
+        } */
+        label{
+            font-size: 18px;
+            margin-left:-50%;
+        }
+        input{
+            padding:7px;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .admin-btn1{
+            padding:7px;
+            background-color: rgb(59, 149, 176);
+            color: white;
+            font-size:17px ;
+            width:130px;
+            border:none;
+            border-radius: 5px;
+            margin-left: 20px;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+        .buttons{
+            text-decoration:none;
+            color:white;
+        }
+        
+        .adminlogin-btn2{
+            padding:7px;
+            background-color: rgb(59, 149, 176);
+            color: white;
+            font-size:17px ;
+            width:130px;
+            border:none;
+            border-radius: 5px;
+            margin-left: 40px;
+            margin-bottom: 4%;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            margin-top: 5%;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .empsignup,.emplist{
+            text-decoration: none;
+            color:white;
+        }
+        .adminheadertag{
+            color:red;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+    <script>
+        function adminLoginAlert(){
+            alert("Your Login Is Successful.")
+        }
+    </script>
+</head>
+<body style="background-color: rgba(0, 0, 0, 0.436);">
+    {% include 'header.html' %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <h2 style="color:red;text-align:center;">{{message}}</h2>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    
+    <div class="admin-div">
+        <form method="POST" action = "{{url_for('admin_login')}}" style="text-align: center;">
+            <h1>Admin Login Page</h1>
+           <div>
+            <label for="email">Email</label><br>
+            <input type="email" placeholder="Enter Your Email" name="email"><br><br>
+           </div>
+           <div>
+            <label for="password">Password</label><br>
+            <input type="password" placeholder="Enter Your Password" name="password" minlength="8"><br><br>
+           </div>
+           <div>
+            <label for="password">Passcode</label><br>
+            <input type="password" placeholder="Enter Your Passcode" name="passcode"><br><br>
+           </div>
+           <p>Forgot Password ?<a href="#">Click Here</a></p>
+           <div>
+            <a href="{{url_for('home')}}"> <button type="submit" class="admin-btn1">Submit </button></a>
+         <a href="{{ url_for('home') }}" class = "buttons">  <button class="adminlogin-btn2" type="button">Back </button></a>
+       
+           </div>
+        </form>
+        
+    </div>
+    {% include 'footer1.html' %}
+</body>
+</html>

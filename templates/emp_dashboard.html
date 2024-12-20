@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5), -5px -5px 10px rgba(0, 0, 255, 0.3);
+            width: 700px;
+            height: auto;
+            margin-left: 25%;
+            margin-top: 6%;
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* .form-inline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px; /* Add more space between buttons */
+        /* margin-bottom: 20px; */
+
+         /* Flex container for Date, Check-in, and Check-out buttons */
+         .form-inline {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .form-inline input[type="date"] {
+            padding: 10px;
+            font-size: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 150px;
+        }
+        .form-inline form:first-child button.checkin-btn {
+            margin-left: 100px;
+        }
+
+        .form-inline button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .container input[type="date"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 180px;
+        }
+
+        .container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .checkin-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .checkin-btn:hover {
+            background-color: #218838;
+        }
+
+        .checkout-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .checkout-btn:hover {
+            background-color: #c82333;
+        }
+
+        .work-status {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .work-status label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .work-status textarea {
+            width: 100%;
+            height: 100px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-button,
+        .updateprofile-button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            position: absolute;
+            top: 90px;
+            right: 20px;
+        }
+
+        .logout-button:hover,
+        .updateprofile-button:hover {
+            background-color: #0056b3;
+        }
+
+        .updateprofile-button {
+            right: 130px;
+        }
+        .flash-message {
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      border-radius: 5px;
+      font-size: 20px;
+      animation: fadeOut 30s forwards; /* Auto-hide after 30 seconds */
+      color: rgb(86, 125, 196);
+      text-align:center;
+    }
+
+    .flash-message.info {
+      background-color: #f0f8ff;
+      color: #007BFF;
+    }
+
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #ab2588;
+    }
+    .flash-message.error{
+      background-color: #d4edda;
+      color: red;
+    }
+    /* Fade-out animation */
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        display: none;
+      }
+    }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <h1>Hello, {{ username }}</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- Logout and Update Profile Buttons -->
+    <div class="nav-right">
+        <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </div>
+    <div class="nav-right">
+        <a href="{{ url_for('update_profile') }}" class="updateprofile-button">Update Profile</a>
+    </div>
+
+    <div class="container">
+        <h1>Select a Date</h1>
+
+        <!-- Date, Check-in and Check-out Form -->
+        <div class="form-inline">
+            <!-- Check-in button -->
+                <form action="{{ url_for('checkin') }}" method="post">
+                    <label>Date: </label>
+                    <input type="date" id="date" name="date" required>
+                    <button type="submit" class="checkin-btn">Check-in</button>
+                </form>
+            <!-- Check-out button -->
+            <form action="{{ url_for('checkout') }}" method="post">
+                <button type="submit" class="checkout-btn">Check-out</button>
+            </form>
+        </div>
+
+        <!-- Work Status Section -->
+        <div class="work-status">
+            <form action="{{ url_for('work_status') }}" method="POST">
+                <label for="work-status">Work Status:</label>
+                <textarea id="work-status" name="work_status" placeholder="Enter your work status here..."></textarea>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    {% include 'footer1.html' %}
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emp_Details</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-left: 8%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color:crimson;
+            
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+            /* It means it will show light ash color for every even number row */
+            /* background-color: orange; */
+        }
+
+        tr:hover {
+            /* background-color: #f1f1f1; */
+            background-color: lightblue;
+        }
+
+        /* Search Bar Section
+         .backto-dashboard {
+            background-color: #007bff; /* Blue button */
+        /* color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            position: absolute; /* Allows placement anywhere */
+        /* top: 90px; /* Distance from the top of the page */
+        /* right: 20px; /* Distance from the right of the page */
+        */ */ */ */
+
+        /* .backto-dashboard:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        */ .button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+            margin-top: 5%;
+            margin-right: 50px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-left: 90%;
+            margin-top: 2%;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .empdashboard {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            .title h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body style="background-color: #f3e5f5;">
+    {% include 'header.html' %}
+    <!-- <div class="nav-right">
+        <a href="{{ url_for('emp_dashboard') }}" class="backto-dashboard">Back To Dashboard</a>
+    </div> -->
+    <!-- <a href="{{ url_for('emp_dashboard') }}" class="backto-dashboard"><button class="nav-right">Back To Dashboard</button></a> -->
+    <a href="{{url_for('emp_dashboard')}}" class="empdashboard"><button class="button">Back</button></a>
+
+    <!-- <h1 style="color:red;">Check in Successful.</h1> -->
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Emp_Id</th>
+                <th>Username</th>
+                <th>Date</th>
+                <th>Checkin_Time</th>
+                <th>Checkout_Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ checkin_data[0] }}</td>
+                <td>{{ checkin_data[1] }}</td>
+                <td>{{ checkin_data[2] }}</td>
+                <td>{{ checkin_data[3] }}</td>
+                <td>{{ checkin_data[4] }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {% include 'footer1.html' %}
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Check-in Details</title>
+    <style>
+        .flash-msg{
+            color: rgb(47, 20, 220);
+            font-size: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 60px;
+            margin-left: 8%;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        
+        }
+        th {
+            background-color: #f2f2f2;
+            color:crimson;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;/* It means it will show light ash color for every even number row */
+            /* background-color: orange; */
+        }
+        tr:hover {
+            /* background-color: #f1f1f1; */
+            background-color: lightblue;
+        }
+        .back{
+            background-color:crimson; /* Blue button */
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            position: absolute; /* Allows placement anywhere */
+            top: 90px; /* Distance from the top of the page */
+            right: 50px; /* Distance from the right of the page */
+        }
+        .back:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1 style="text-align: center; margin-top: 10px;color:crimson;">Employee Check-in Details</h1>
+    {% if message %}
+        <p class="flash-msg">{{ message }}</p>
+    {% endif %}
+    <!-- Display the table if there is data -->
+    <table border="1">
+        <tr>
+            <th>Emp_Id</th>
+            <th>FullName</th>
+            <th>Check-in Date</th>
+            <th>Check-in Time</th>
+            <th>Check-out Time</th>
+          
+        </tr>
+        {% for data in view_data %}
+            <!-- <tr>
+                <td>{{ data.emp_id }}</td>
+                <td>{{ data.username }}</td>
+                <td>
+                    {% if data.date is not none %}
+                        {{ data.date }}
+                    {% else %}
+                        Not Checkin 
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.checkin_time is not none %}
+                        {{ data.checkin_time }}
+                    {% else %}
+                        Not Checked In
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data.checkout_time is not none %}
+                        {{ data.checkout_time }}
+                    {% else %}
+                        Not Checked Out
+                    {% endif %}
+                </td>
+            </tr> -->
+            <tr>
+                <!-- <pre>{{view_data}}</pre> -->
+                <td>{{ data[0] }}</td>
+                <td>{{ data[1] }}</td>
+                <td>
+                    {% if data[2] is not none %}
+                        {{ data[2] }}
+                    {% else %}
+                        Not Checkin 
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data[3] is not none %}
+                        {{ data[3]}}
+                    {% else %}
+                        Not Checked In
+                    {% endif %}
+                </td>
+                <td>
+                    {% if data[4] is not none %}
+                        {{ data[4] }}
+                    {% else %}
+                        Not Checked Out
+                    {% endif %}
+                </td>
+                <td>
+                   
+                </td>
+
+            </tr>
+            <!-- <td>{{ data['emp_id'] }}</td>
+            <td>{{ data['username'] }}</td>
+            <td>{{ data['date'] }}</td>
+            <td>{{ data['checkin_time'] }}</td>
+            <td>{{ data['checkout_time'] }}</td> -->
+        {% endfor %}
+    </table>
+    <div>
+        <a href="{{ url_for('emp_dashboard')}}" class="back">Back</a>
+       
+    </div>
+    {% include 'footer1.html' %}
+</body>
+</html>
