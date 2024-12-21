@@ -13,6 +13,7 @@ Session(app) #creates security layer
 # Secret Key is required for using flash messages
 app.secret_key = 'secret word'
 #db = mysql.connector.connect(host='localhost',user='root',password='tejeshtanishka',database='payroll')
+#connect database to aws
 user=os.environ.get('RDS_USER')
 db=os.environ.get('RDS_DB_NAME')
 password=os.environ.get('RDS_PASSWORD')
@@ -20,7 +21,7 @@ host=os.environ.get('RDS_HOSTNAME')
 port=os.environ.get('RDS_PORT')
 with mysql.connector.connect(host=host,password=password,db=db,user=user,port=port) as conn:
     cursor=conn.cursor()
-    cursor.execute("CREATE TABLE if not exists admin(email varchar(50) DEFAULT NULL,password varchar(50) DEFAULT NULL,passcode varchar(50) DEFAULT NULL) ")
+    # cursor.execute("CREATE TABLE if not exists admin(email varchar(50) DEFAULT NULL,password varchar(50) DEFAULT NULL,passcode varchar(50) DEFAULT NULL) ")
     cursor.execute("CREATE TABLE if not exists  emp_records (emp_id varchar(20) DEFAULT NULL,username varchar(100) DEFAULT NULL,date date DEFAULT NULL,checkin_time time DEFAULT NULL,checkout_time time DEFAULT NULL)")
     cursor.execute("CREATE TABLE if not exists emp_registration (emp_id varchar(20) NOT NULL,firstname varchar(50) DEFAULT NULL,lastname varchar(100) DEFAULT NULL,designation varchar(20) NOT NULL,gender enum('male','female','others') DEFAULT NULL,phone_number bigint DEFAULT NULL,email varchar(50) NOT NULL,password varchar(20) NOT NULL,address textdepartment varchar(30) NOT NULL,salary int unsigned NOT NULL,PRIMARY KEY (emp_id),UNIQUE KEY email (email)) ")
     cursor.execute("CREATE TABLE if not exists  otp_rec (otp_id int NOT NULL AUTO_INCREMENT,email varchar(50) DEFAULT NULL,otp varchar(10) DEFAULT NULL,PRIMARY KEY (otp_id)) ")
@@ -44,22 +45,22 @@ def admin_login():
             return render_template('admin_login.html')  # Show the form again with the error
 
         # Check if the email exists in the admin table
-        cursor = db.cursor(dictionary=True) 
-        cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
-        admin_record = cursor.fetchone()
-        cursor.close()
+        # cursor = db.cursor(dictionary=True) 
+        # cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
+        # admin_record = cursor.fetchone()
+        # cursor.close()
 
-        if admin_record:
-            # Email exists, now validate password and passcode
-            if admin_record['password'] == password and admin_record['passcode'] == passcode:
-                # Valid credentials
-                return redirect(url_for('admin_dashboard'))
-            else:
-                # Invalid password or passcode
-                flash("Invalid password or passcode. Please try again.", "error")
+        # if admin_record:
+        #     # Email exists, now validate password and passcode
+        if email == "swarnamucchintala@gmail.com" and password == "tejeshtanishka" and passcode == '@123#':
+            # Valid credentials
+            return redirect(url_for('admin_dashboard'))
         else:
-            # Email does not exist
-            flash("Invalid email. Please enter a valid email.", "error")
+            # Invalid password or passcode
+            flash("Invalid password or passcode. Please try again.", "error")
+        # else:
+        #     # Email does not exist
+        #     flash("Invalid email. Please enter a valid email.", "error")
 
         # If invalid, render the login form again with a flash message
         return render_template('admin_login.html')
@@ -169,7 +170,7 @@ def emp_login():
             emp_record = cursor.fetchone()
             cursor.close()
             print(emp_record)
-            # print(emp_record.values())
+           
             if emp_record:
                 # Email exists, now validate password
                 if emp_record['password'] == password : 
@@ -184,7 +185,7 @@ def emp_login():
                 # flash("Invalid email. Please enter a valid email.", "error")
                 flash('Email Is Not Registered. Please Contact Your Admin to Register.','error')
                 # If invalid, render the login form again with a flash message
-                # return render_template('emp_login.html')
+               
                 return redirect(url_for('home'))
         # Render the admin login form for GET requests
     return render_template('emp_login.html')
