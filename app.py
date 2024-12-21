@@ -566,4 +566,5 @@ def search():
     return render_template("search_results.html", query=query, results=results)
 
 #app.run(debug=True)
-app.run()
+if __name__ == "__main__":
+    app.run()
