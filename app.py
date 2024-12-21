@@ -6,13 +6,18 @@ from cmail import sendmail
 import re
 from datetime import datetime
 from datetime import date
-
+import os
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app) #creates security layer
 # Secret Key is required for using flash messages
 app.secret_key = 'secret word'
 #db = mysql.connector.connect(host='localhost',user='root',password='tejeshtanishka',database='payroll')
+user=os.environ.get('RDS_USER')
+db=os.environ.get('RDS_DB_NAME')
+password=os.environ.get('RDS_PASSWORD')
+host=os.environ.get('RDS_HOSTNAME')
+port=os.environ.get('RDS_PORT')
 with mysql.connector.connect(host=host,password=password,db=db,user=user,port=port) as conn:
     cursor=conn.cursor()
     cursor.execute("CREATE TABLE if not exists admin(email varchar(50) DEFAULT NULL,password varchar(50) DEFAULT NULL,passcode varchar(50) DEFAULT NULL) ")
@@ -20,7 +25,7 @@ with mysql.connector.connect(host=host,password=password,db=db,user=user,port=po
     cursor.execute("CREATE TABLE if not exists emp_registration (emp_id varchar(20) NOT NULL,firstname varchar(50) DEFAULT NULL,lastname varchar(100) DEFAULT NULL,designation varchar(20) NOT NULL,gender enum('male','female','others') DEFAULT NULL,phone_number bigint DEFAULT NULL,email varchar(50) NOT NULL,password varchar(20) NOT NULL,address textdepartment varchar(30) NOT NULL,salary int unsigned NOT NULL,PRIMARY KEY (emp_id),UNIQUE KEY email (email)) ")
     cursor.execute("CREATE TABLE if not exists  otp_rec (otp_id int NOT NULL AUTO_INCREMENT,email varchar(50) DEFAULT NULL,otp varchar(10) DEFAULT NULL,PRIMARY KEY (otp_id)) ")
     cursor.execute("CREATE TABLE if not exists  work_status ( emp_id varchar(20) NOT NULL,datetime datetime DEFAULT CURRENT_TIMESTAMP,workstatus text,KEY emp_id (emp_id),CONSTRAINT work_status_ibfk_1 FOREIGN KEY (emp_id) REFERENCES emp_registration (emp_id)) ")
-mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,port=port)
+mydb=mysql.connector.connect(host=host,user=user,password=password,db=db,port=3306)
 @app.route('/cd')
 def home():
     return render_template('welcome.html')
@@ -560,4 +565,5 @@ def search():
     # Pass the query and results to the template
     return render_template("search_results.html", query=query, results=results)
 
-app.run(debug=True)
+#app.run(debug=True)
+app.run()
