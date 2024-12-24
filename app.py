@@ -1,9 +1,9 @@
-from flask import Flask, render_template, url_for, redirect, flash, request, session #sessions - to generate ids for sessions
+from flask import Flask, render_template, url_for, redirect, flash, request, session
+ #sessions - to generate ids for sessions
 from flask_session import Session #Session - create security layer for session
 import mysql.connector
 from otp import genotp
 from cmail import sendmail
-import re
 from datetime import datetime
 from datetime import date
 import os
@@ -14,7 +14,7 @@ Session(app) #creates security layer
 app.secret_key = 'secret word'
 #db = mysql.connector.connect(host='localhost',user='root',password='tejeshtanishka',database='payroll')
 #connect database to aws
-user=os.environ.get('RDS_USER')
+user=os.environ.get('RDS_USERNAME')
 db=os.environ.get('RDS_DB_NAME')
 password=os.environ.get('RDS_PASSWORD')
 host=os.environ.get('RDS_HOSTNAME')
@@ -23,9 +23,9 @@ with mysql.connector.connect(host=host,password=password,db=db,user=user,port=po
     cursor=conn.cursor()
     # cursor.execute("CREATE TABLE if not exists admin(email varchar(50) DEFAULT NULL,password varchar(50) DEFAULT NULL,passcode varchar(50) DEFAULT NULL) ")
     cursor.execute("CREATE TABLE if not exists  emp_records (emp_id varchar(20) DEFAULT NULL,username varchar(100) DEFAULT NULL,date date DEFAULT NULL,checkin_time time DEFAULT NULL,checkout_time time DEFAULT NULL)")
-    cursor.execute("CREATE TABLE if not exists emp_registration (emp_id varchar(20) NOT NULL,firstname varchar(50) DEFAULT NULL,lastname varchar(100) DEFAULT NULL,designation varchar(20) NOT NULL,gender enum('male','female','others') DEFAULT NULL,phone_number bigint DEFAULT NULL,email varchar(50) NOT NULL,password varchar(20) NOT NULL,address textdepartment varchar(30) NOT NULL,salary int unsigned NOT NULL,PRIMARY KEY (emp_id),UNIQUE KEY email (email)) ")
-    cursor.execute("CREATE TABLE if not exists  otp_rec (otp_id int NOT NULL AUTO_INCREMENT,email varchar(50) DEFAULT NULL,otp varchar(10) DEFAULT NULL,PRIMARY KEY (otp_id)) ")
-    cursor.execute("CREATE TABLE if not exists  work_status ( emp_id varchar(20) NOT NULL,datetime datetime DEFAULT CURRENT_TIMESTAMP,workstatus text,KEY emp_id (emp_id),CONSTRAINT work_status_ibfk_1 FOREIGN KEY (emp_id) REFERENCES emp_registration (emp_id)) ")
+    cursor.execute("CREATE TABLE if not exists emp_registration(emp_id varchar(20) NOT NULL,firstname varchar(50) DEFAULT NULL,lastname varchar(100) DEFAULT NULL,designation varchar(20) NOT NULL,gender enum('male','female','others') DEFAULT NULL,phone_number bigint DEFAULT NULL,email varchar(50) NOT NULL,password varchar(20) NOT NULL,address textdepartment varchar(30) NOT NULL,salary int unsigned NOT NULL,PRIMARY KEY (emp_id),UNIQUE KEY email (email)) ")
+    cursor.execute("CREATE TABLE if not exists  otp_rec(otp_id int NOT NULL AUTO_INCREMENT,email varchar(50) DEFAULT NULL,otp varchar(10) DEFAULT NULL,PRIMARY KEY (otp_id)) ")
+    cursor.execute("CREATE TABLE if not exists  work_status(emp_id varchar(20) NOT NULL,datetime datetime DEFAULT CURRENT_TIMESTAMP,workstatus text,KEY emp_id (emp_id),CONSTRAINT work_status_ibfk_1 FOREIGN KEY (emp_id) REFERENCES emp_registration (emp_id))")
 db=mysql.connector.connect(host=host,user=user,password=password,db=db,port=port)
 @app.route('/cd')
 def home():
@@ -49,9 +49,8 @@ def admin_login():
         # cursor.execute("SELECT * FROM admin WHERE email = %s", (email,))
         # admin_record = cursor.fetchone()
         # cursor.close()
-
         # if admin_record:
-        #     # Email exists, now validate password and passcode
+        # Email exists, now validate password and passcode
         if email == "swarnamucchintala@gmail.com" and password == "tejeshtanishka" and passcode == '@123#':
             # Valid credentials
             return redirect(url_for('admin_dashboard'))
